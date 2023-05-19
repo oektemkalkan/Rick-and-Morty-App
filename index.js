@@ -52,3 +52,5 @@ nextButton.addEventListener("click", (event) => {
   page++; 
   fetchCharacters();
 })
+
+//test
