@@ -11,12 +11,7 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 42;
-const minPage = 1;
-const page = 1;
-/* page.max = maxPage;
-page.min = minPage; */
-console.log(page);
+let page = 1;
 const searchQuery = "";
 
 export async function fetchCharacters() {
@@ -27,6 +22,8 @@ export async function fetchCharacters() {
     const response = await fetch(ApiUrl);
     const data = await response.json();
   console.log(data);
+  const maxPage = data.info.pages;
+  pagination.innerHTML = `${page}/${maxPage}`;
 
   data.results.forEach((character) => {
     const characterElement = createCharacterCard(character);
@@ -39,16 +36,15 @@ export async function fetchCharacters() {
 }
 fetchCharacters();
 
-prevButton.addEventListener("click", (event) => {
-  event.preventDefault();
+prevButton.addEventListener("click", async () => {
   cardContainer.innerHTML = "";
   page--; 
-  fetchCharacters();
+  await fetchCharacters();
 })
 
-nextButton.addEventListener("click", (event) => {
-  event.preventDefault();
+nextButton.addEventListener("click", async () => {
   cardContainer.innerHTML = "";
   page++; 
-  fetchCharacters();
+  console.log(page);
+  await fetchCharacters();
 })
